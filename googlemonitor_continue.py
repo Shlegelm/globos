@@ -121,7 +121,8 @@ while True:
                            '3-day_step': 0,
                            'mean_step': 0}
                 g_stock = pd.DataFrame(monitor, index=[row])
-            
+            print (row + 'stock')
+            print (g_stock)
             try:
                 g_name_nc = google.google_dow(name_notcleared)
             except KeyError:
@@ -131,7 +132,8 @@ while True:
                            '3-day_step': 0,
                            'mean_step': 0}
                 g_name_nc = pd.DataFrame(monitor, index=[row])
-            
+            print(name_notcleared)
+            print(g_name_nc)
             try:
                 g_name_c = google.google_dow(name_cleared)
             except KeyError:
@@ -141,6 +143,8 @@ while True:
                            '3-day_step': 0,
                            'mean_step': 0}
                 g_name_c = pd.DataFrame(monitor, index=[row])
+            print(name_cleared)
+            print( g_name_c)
 
             google_m = {'zerocount': (g_stock.loc[g_stock.index ==row,'zerocount'].values[0]+g_name_nc.loc[g_name_nc.index ==row,'zerocount'].values[0]+g_name_c.loc[g_name_c.index ==row,'zerocount'].values[0])/3,
                            '1-day_step': (g_stock.loc[g_stock.index ==row,'1-day_step'].values[0]+g_name_nc.loc[g_name_nc.index ==row,'1-day_step'].values[0]+g_name_c.loc[g_name_c.index ==row,'1-day_step'].values[0])/3,
@@ -148,7 +152,8 @@ while True:
                            '3-day_step': (g_stock.loc[g_stock.index ==row,'3-day_step'].values[0]+g_name_nc.loc[g_name_nc.index ==row,'3-day_step'].values[0]+g_name_c.loc[g_name_c.index ==row,'3-day_step'].values[0])/3,
                            'mean_step': (g_stock.loc[g_stock.index ==row,'mean_step'].values[0]+g_name_nc.loc[g_name_nc.index ==row,'mean_step'].values[0]+g_name_c.loc[g_name_c.index ==row,'mean_step'].values[0])/3}
             monitorgoogle = pd.DataFrame(google_m, index=[row]) 
-
+            print('hooray')
+            print(monitorgoogle)
             try:
                 monitoriex = iex5days.fivedays(row)
             except IndexError:
