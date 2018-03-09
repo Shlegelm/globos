@@ -137,7 +137,7 @@ class google():
     
        
         monitor = []
-        monitor = {'zerocount' : zerocounter,
+        monitor = {'zerocount' : zerocount,
                    '1-day_step' : interest_over_time_df[word].iloc[-1]-interest_over_time_df[word].iloc[-2],
                    '2-day_step' : interest_over_time_df[word].iloc[-1]-interest_over_time_df[word].iloc[-3],
                    '3-day_step': interest_over_time_df[word].iloc[-1]-interest_over_time_df[word].iloc[-4],

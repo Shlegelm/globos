@@ -92,6 +92,13 @@ while True:
             
             print (indexshare)
             row = df_list.loc[df_list.index==indexshare, 'symbol'].values[0]
+            name_notcleared = df_list.loc[df_list.index==indexshare, 'name'].values[0]
+            name_cleared = name_notcleared.replace("Inc.","")
+            name_cleared = name_cleared.replace("Inc.","")
+            name_cleared = name_cleared.replace("Corp","")
+            name_cleared = name_cleared.replace("Corp.","")
+            name_cleared = name_cleared.replace("Ltd.","")
+            name_cleared = name_cleared.replace("Ltd","")
             print(row)
 
             try:
@@ -106,15 +113,41 @@ while True:
             print ('backup rewrite')
 
             try:
-                monitorgoogle = google.google_dow(row)
+                g_stock = google.google_dow(row + 'stock')
             except KeyError:
-                monitor = {'zerocount': 'no',
+                monitor = {'zerocount': 0,
                            '1-day_step': 0,
                            '2-day_step': 0,
                            '3-day_step': 0,
                            'mean_step': 0}
+                g_stock = pd.DataFrame(monitor, index=[row])
+            
+            try:
+                g_name_nc = google.google_dow(name_notcleared)
+            except KeyError:
+                monitor = {'zerocount': 0,
+                           '1-day_step': 0,
+                           '2-day_step': 0,
+                           '3-day_step': 0,
+                           'mean_step': 0}
+                g_name_nc = pd.DataFrame(monitor, index=[row])
+            
+            try:
+                g_name_c = google.google_dow(name_cleared)
+            except KeyError:
+                monitor = {'zerocount': 0,
+                           '1-day_step': 0,
+                           '2-day_step': 0,
+                           '3-day_step': 0,
+                           'mean_step': 0}
+                g_name_c = pd.DataFrame(monitor, index=[row])
 
-                monitorgoogle = pd.DataFrame(monitor, index=[row])
+            google_m = {'zerocount': (g_stock.loc[g_stock.index ==row,'zerocount'].values[0]+g_name_nc.loc[g_name_nc.index ==row,'zerocount'].values[0]+g_name_c.loc[g_name_c.index ==row,'zerocount'].values[0])/3,
+                           '1-day_step': (g_stock.loc[g_stock.index ==row,'1-day_step'].values[0]+g_name_nc.loc[g_name_nc.index ==row,'1-day_step'].values[0]+g_name_c.loc[g_name_c.index ==row,'1-day_step'].values[0])/3,
+                           '2-day_step': (g_stock.loc[g_stock.index ==row,'2-day_step'].values[0]+g_name_nc.loc[g_name_nc.index ==row,'2-day_step'].values[0]+g_name_c.loc[g_name_c.index ==row,'2-day_step'].values[0])/3,
+                           '3-day_step': (g_stock.loc[g_stock.index ==row,'3-day_step'].values[0]+g_name_nc.loc[g_name_nc.index ==row,'3-day_step'].values[0]+g_name_c.loc[g_name_c.index ==row,'3-day_step'].values[0])/3,
+                           'mean_step': (g_stock.loc[g_stock.index ==row,'mean_step'].values[0]+g_name_nc.loc[g_name_nc.index ==row,'mean_step'].values[0]+g_name_c.loc[g_name_c.index ==row,'mean_step'].values[0])/3}
+            monitorgoogle = pd.DataFrame(google_m, index=[row]) 
 
             try:
                 monitoriex = iex5days.fivedays(row)

@@ -41,7 +41,7 @@ for elt in gen:
             raw_gdf.to_sql('raw_monitor_backup', engine, if_exists = 'append', dtype={'None':VARCHAR(200)})
             
 
-            monitorgoogle, zerocounter = google.google_dow(row)
+            monitorgoogle = google.google_dow(row+'stock')
             monitoriex = iex5days.fivedays(row)
             monitordf = pd.concat([monitorgoogle,monitoriex],axis=1, join='inner')
             a = monitordf.loc[monitordf.index==row,'1-day_step'].values[0]
