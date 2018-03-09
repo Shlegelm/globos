@@ -43,11 +43,11 @@ def splitter():
             
     for row in raw_data.index:
         interest = raw_data.loc[raw_data.index==row,'zerocount'].values[0]
-        if interest == 'high':
+        if interest <=50:
             high_idf = high_idf.append(raw_data.loc[raw_data.index==row])
-        if interest == 'medium':
+        if 50 < interest < 150 :
             medium_idf = medium_idf.append(raw_data.loc[raw_data.index==row])
-        if interest == 'low':
+        if interest >=150:
             low_idf = low_idf.append(raw_data.loc[raw_data.index==row])      
         
     with engine.connect() as con:
@@ -89,7 +89,7 @@ while True:
             else:
                 indexshare = 0
             
-            indexshare = 1
+            
             print (indexshare)
             row = df_list.loc[df_list.index==indexshare, 'symbol'].values[0]
             name_notcleared = df_list.loc[df_list.index==indexshare, 'name'].values[0]
