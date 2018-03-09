@@ -121,8 +121,7 @@ while True:
                            '3-day_step': 0,
                            'mean_step': 0}
                 g_stock = pd.DataFrame(monitor, index=[rows])
-            print (rows)
-            print (g_stock)
+
             try:
                 g_name_nc = google.google_dow(name_notcleared)
             except KeyError:
@@ -132,8 +131,7 @@ while True:
                            '3-day_step': 0,
                            'mean_step': 0}
                 g_name_nc = pd.DataFrame(monitor, index=[name_notcleared])
-            print(name_notcleared)
-            print(g_name_nc)
+
             try:
                 g_name_c = google.google_dow(name_cleared)
             except KeyError:
@@ -143,13 +141,12 @@ while True:
                            '3-day_step': 0,
                            'mean_step': 0}
                 g_name_c = pd.DataFrame(monitor, index=[name_cleared])
-            print(name_cleared)
-            print( g_name_c)
+
             gmz1 = g_stock.loc[g_stock.index == rows,'zerocount'].values[0]
             gmz2 = g_name_nc.loc[g_name_nc.index == name_notcleared,'zerocount'].values[0]
             gmz3 = g_name_c.loc[g_name_c.index == name_cleared,'zerocount'].values[0]
             gmz = gmz1 + gmz2 + gmz3
-            print(gmz)
+
             gm1 = g_stock.loc[g_stock.index == rows,'1-day_step'].values[0]+g_name_nc.loc[g_name_nc.index == name_notcleared,'1-day_step'].values[0]+g_name_c.loc[g_name_c.index == name_cleared,'1-day_step'].values[0]
             gm2 = g_stock.loc[g_stock.index == rows, '2-day_step'].values[0] + g_name_nc.loc[g_name_nc.index == name_notcleared, '2-day_step'].values[0] +g_name_c.loc[g_name_c.index == name_cleared, '2-day_step'].values[0]
             gm3 = g_stock.loc[g_stock.index == rows,'3-day_step'].values[0]+g_name_nc.loc[g_name_nc.index == name_notcleared,'3-day_step'].values[0]+g_name_c.loc[g_name_c.index == name_cleared,'3-day_step'].values[0]
